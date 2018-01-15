@@ -16,6 +16,8 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+//This Endpoint is to authenticate the user
 @Path("/signin")
 public class signinEndpoint {
     //private static Connection con = jdbcConnection.getConnection();
@@ -51,12 +53,14 @@ public class signinEndpoint {
     }
 
     private void authenticate(String username, String password){
+        //TODO: check if the user exist in the database and provided password is valid
             LOGGER.log(Level.INFO, "authenticated");
     }
 
     private String issueToken(String username) throws Exception {
-        // Todo: Issue token using JWT;
-
+            String token = jwt.createJWT(username, issuer, subject, time);
+        //TODO: create token table in a database
+        //TODO: save this issued token in the database
         //String token =  getSaltString() + username;
 //        Date issueDate = new Date();
 //        Calendar cal = Calendar.getInstance();
@@ -64,7 +68,7 @@ public class signinEndpoint {
 //        cal.add(Calendar.MONTH, 6);
 //        Date expiryDate = cal.getTime();
 //        String issuer = "BenKim";
-        String token = jwt.createJWT(username, issuer, subject, time);
+        
 
 //        String query = "INSERT INTO Validation (token, expiryDate, issueDate, issuer)"
 //                + " values ('"+token+"','"+ new java.sql.Date(expiryDate.getTime()) +"','"+ new java.sql.Date(issueDate.getTime())+"', '"+ issuer+"')";
