@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="skillbackend:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="skillbackend.war">
+      <element id="artifact" artifact-name="skillbackend:war exploded" />
+    </root>
+  </artifact>
+</component>
