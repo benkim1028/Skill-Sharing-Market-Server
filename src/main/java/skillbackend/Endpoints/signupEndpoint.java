@@ -27,21 +27,25 @@ public class signupEndpoint{
        String password = credentials.getPassword();
        LOGGER.log(Level.INFO, "username = " + username + ", password = " + password);
       
-       try(
-          //save the user information in the database
+       try {
+           //save the user information in the database
            saveInDatabase(username, password);
-          //if successfully saved in the database, give the user a token (same as signin process)
-           return Response.ok(token).build();
+           //if successfully saved in the database, give the user a token (same as signin process)
+           return Response.ok().build();
        } catch (Exception e) {
            LOGGER.log(Level.SEVERE, e.toString(), e);
            throw e;
        }
-       return Response.Status(Response.Status.FORBIDDEN).build();
+       //return Response.status(Response.Status.FORBIDDEN).build();
 
    }
     
    private void saveInDatabase(String username, String password){
-      String hashedPassword = HASH.hashPassword(password);
+       try {
+           String hashedPassword = HASH.hashPassword(password);
+       } catch(Exception e){
+           throw e;
+       }
       //TODO: create user table in a database
       //TODO: get hash of password and then save userid and hash of password into the database
          

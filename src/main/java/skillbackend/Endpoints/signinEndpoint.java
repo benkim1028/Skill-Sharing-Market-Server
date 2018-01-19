@@ -2,12 +2,14 @@ package skillbackend.Endpoints;
 
 import javassist.bytecode.stackmap.TypeData;
 import skillbackend.Model.Credentials;
+import skillbackend.Model.Identifier;
 import skillbackend.Model.JWT;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Calendar;
@@ -23,8 +25,6 @@ public class signinEndpoint {
     //private static Connection con = jdbcConnection.getConnection();
     private static final Logger LOGGER = Logger.getLogger( TypeData.ClassName.class.getName() );
     private static final JWT jwt = new JWT();
-    private static final String issuer = "Ben Kim";
-    private static final String subject = "123456789";
     private static final int time = 999999999;
 
     @POST
@@ -44,7 +44,7 @@ public class signinEndpoint {
             // Issue a token for the user
             String token = issueToken(username);
 
-            // Return the token on the response
+            // Return the token on the response and set cookie
             return Response.ok(token).build();
 
         } catch (Exception e) {
@@ -58,7 +58,7 @@ public class signinEndpoint {
     }
 
     private String issueToken(String username) throws Exception {
-            String token = jwt.createJWT(username, issuer, subject, time);
+            String token = jwt.createJWT(username, Identifier.issuer, Identifier.subject, time);
         //TODO: create token table in a database
         //TODO: save this issued token in the database
         //String token =  getSaltString() + username;

@@ -39,7 +39,7 @@ public class JWT {
         //Builds the JWT and serializes it to a compact, URL-safe string
         return builder.compact();
     }
-    public void parseJWT(String jwt) {
+    public boolean parseJWT(String jwt) {
 
         //This line will throw an exception if it is not a signed JWS (as expected)
         Claims claims = Jwts.parser()
@@ -49,5 +49,7 @@ public class JWT {
         System.out.println("Subject: " + claims.getSubject());
         System.out.println("Issuer: " + claims.getIssuer());
         System.out.println("Expiration: " + claims.getExpiration());
+        //TODO: This validation need to be changed
+        return true;
     }
 }
