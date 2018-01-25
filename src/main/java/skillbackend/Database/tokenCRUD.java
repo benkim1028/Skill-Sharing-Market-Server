@@ -4,27 +4,21 @@ import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import skillbackend.Model.Credentials;
 import skillbackend.Model.Hash;
+import skillbackend.Model.JWT;
 
-public class userCRUD implements CRUD {
+public class tokenCRUD implements CRUD{
     private static final Hash HASH = new Hash();
     private MongoCollection<Document> collection = db.getCollection("user");
 
-    @Override
-    public void create(Object obj) throws Exception {
-        if (!(obj instanceof Credentials))
+    public void create(Object obj) throws Exception{
+        if (!(obj instanceof JWT))
             throw new Exception();
         Credentials credentials = (Credentials) obj;
         Document doc = new Document("username", credentials.getUsername())
                 .append("password", HASH.hashPassword(credentials.getPassword()));
         collection.insertOne(doc);
-    }
-    @Override
-    public void read(String collectionName){}
-
-    @Override
-    public void update(String collectionName){}
-
-    @Override
-    public void delete(){}
-
+    };
+    public void read(String collectionName){};
+    public void update(String collectionName){};
+    public void delete(){};
 }

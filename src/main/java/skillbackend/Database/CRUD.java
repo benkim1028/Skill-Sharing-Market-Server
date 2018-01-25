@@ -1,8 +1,10 @@
 package skillbackend.Database;
 
+import com.mongodb.client.MongoDatabase;
+
 public interface CRUD {
-    private MongoDB mongoDB = MongoDB.getInstance();
-    protected MongoDB db = mongoDB.getDB();
+     MongoDB mongoDB = MongoDB.getInstance();
+     MongoDatabase db = mongoDB.getDB();
 
     //create collection
     public void create(Object obj) throws Exception;
