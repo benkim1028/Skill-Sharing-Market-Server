@@ -7,18 +7,18 @@ import skillbackend.Model.Hash;
 import skillbackend.Model.JWT;
 
 public class tokenCRUD implements CRUD{
-    private static final Hash HASH = new Hash();
+    private Hash HASH = new Hash();
     private MongoCollection<Document> collection = db.getCollection("user");
 
-    public void create(Object obj) throws Exception{
-        if (!(obj instanceof JWT))
-            throw new Exception();
-        Credentials credentials = (Credentials) obj;
-        Document doc = new Document("username", credentials.getUsername())
-                .append("password", HASH.hashPassword(credentials.getPassword()));
+    public void create(Object obj){
+        JWT token = (JWT) obj;
+        Document doc = new Document("token", token.toString());
         collection.insertOne(doc);
     };
-    public void read(String collectionName){};
+    public void read(Object obj){
+        JWT token = (JWT) obj;
+
+    };
     public void update(String collectionName){};
     public void delete(){};
 }

@@ -7,8 +7,8 @@ public interface CRUD {
      MongoDatabase db = mongoDB.getDB();
 
     //create collection
-    public void create(Object obj) throws Exception;
-    public void read(String collectionName);
+    public void create(Object obj);
+    public void read(Object obj) throws Exception;
     public void update(String collectionName);
     public void delete();
 }

@@ -50,6 +50,9 @@ public class JWT {
         System.out.println("Issuer: " + claims.getIssuer());
         System.out.println("Expiration: " + claims.getExpiration());
         //TODO: This validation need to be changed
-        return true;
+        if(Identifier.issuer.equals(claims.getIssuer()) && Identifier.subject.equals(claims.getSubject()) && claims.getExpiration().compareTo(new Date()) < 0)
+            return true;
+        else
+            return false;
     }
 }

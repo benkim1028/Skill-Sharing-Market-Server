@@ -1,6 +1,8 @@
 package skillbackend.Endpoints;
 
 import javassist.bytecode.stackmap.TypeData;
+import skillbackend.Database.CRUD;
+import skillbackend.Database.userCRUD;
 import skillbackend.Model.Credentials;
 import skillbackend.Model.Hash;
 
@@ -18,7 +20,7 @@ import java.util.logging.Logger;
 @Path("/signup")
 public class signupEndpoint{
    private static final Logger LOGGER = Logger.getLogger( TypeData.ClassName.class.getName() );
-   private static final Hash HASH = new Hash();
+   private Hash HASH = new Hash();
    @POST
    @Produces(MediaType.APPLICATION_JSON)
    @Consumes(MediaType.APPLICATION_JSON)
@@ -29,7 +31,7 @@ public class signupEndpoint{
       
        try {
            //save the user information in the database
-           saveInDatabase(username, password);
+           saveInDatabase(credentials);
            //if successfully saved in the database, give the user a token (same as signin process)
            return Response.ok().build();
        } catch (Exception e) {
@@ -40,10 +42,14 @@ public class signupEndpoint{
 
    }
     
-   private void saveInDatabase(String username, String password){
+   private void saveInDatabase(Credentials credentials){
        try {
-           String hashedPassword = HASH.hashPassword(password);
+           String hashedPassword = HASH.hashPassword(credentials.getPassword());
+           credentials.setPassword(hashedPassword);
+           CRUD userCRUD = new userCRUD();
+           userCRUD.create(credentials);
        } catch(Exception e){
+           LOGGER.log(Level.SEVERE, e.toString(), e);
            throw e;
        }
       //TODO: create user table in a database

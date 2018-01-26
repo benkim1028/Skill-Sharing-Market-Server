@@ -1,6 +1,9 @@
 package skillbackend.Endpoints;
 
 import javassist.bytecode.stackmap.TypeData;
+import skillbackend.Database.CRUD;
+import skillbackend.Database.tokenCRUD;
+import skillbackend.Database.userCRUD;
 import skillbackend.Model.Credentials;
 import skillbackend.Model.Identifier;
 import skillbackend.Model.JWT;
@@ -39,7 +42,7 @@ public class signinEndpoint {
         try {
 
             // Authenticate the user using the credentials provided
-            authenticate(username, password);
+            authenticate(credentials);
 
             // Issue a token for the user
             String token = issueToken(username);
@@ -52,48 +55,27 @@ public class signinEndpoint {
         }
     }
 
-    private void authenticate(String username, String password){
+    private void authenticate(Credentials credentials) throws Exception {
         //TODO: check if the user exist in the database and provided password is valid
-            LOGGER.log(Level.INFO, "authenticated");
+        LOGGER.log(Level.INFO, "Authenticating the user - username: " + credentials.getUsername() + " password: " + credentials.getPassword());
+        CRUD userCRUD = new userCRUD();
+        try {
+            userCRUD.read(credentials);
+        } catch(Exception e){
+            LOGGER.log(Level.SEVERE, e.toString(), e);
+            throw e;
+        }
+        return;
     }
 
-    private String issueToken(String username) throws Exception {
-            String token = jwt.createJWT(username, Identifier.issuer, Identifier.subject, time);
-        //TODO: create token table in a database
-        //TODO: save this issued token in the database
-        //String token =  getSaltString() + username;
-//        Date issueDate = new Date();
-//        Calendar cal = Calendar.getInstance();
-//        cal.setTime(issueDate);
-//        cal.add(Calendar.MONTH, 6);
-//        Date expiryDate = cal.getTime();
-//        String issuer = "BenKim";
-        
-
-//        String query = "INSERT INTO Validation (token, expiryDate, issueDate, issuer)"
-//                + " values ('"+token+"','"+ new java.sql.Date(expiryDate.getTime()) +"','"+ new java.sql.Date(issueDate.getTime())+"', '"+ issuer+"')";
-//        try {
-//            Statement stmt = con.createStatement();
-//            stmt.executeUpdate(query);
-//        }catch (Exception e) {
-//            LOGGER.log(Level.SEVERE, e.toString(), e);
-//            throw e;
-//        }
+    private String issueToken(String username){
+        LOGGER.log(Level.INFO,"Issuing a token for a user: " + username);
+        String token = jwt.createJWT(username, Identifier.issuer, Identifier.subject, time);
+        //CRUD tokenCRUD = new tokenCRUD();
+        //tokenCRUD.create(token);
         return token;
     }
 
-    protected String getSaltString() {
-        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        while (salt.length() < 18) { // length of the random string.
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-            salt.append(SALTCHARS.charAt(index));
-        }
-        String saltStr = salt.toString();
-        return saltStr;
-
-    }
 }
 
 

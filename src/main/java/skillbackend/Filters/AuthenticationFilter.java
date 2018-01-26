@@ -2,6 +2,8 @@ package skillbackend.Filters;
 
 import javassist.bytecode.stackmap.TypeData;
 import skillbackend.Annotations.Secured;
+import skillbackend.Database.CRUD;
+import skillbackend.Database.tokenCRUD;
 import skillbackend.Model.JWT;
 
 import javax.annotation.Priority;
