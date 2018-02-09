@@ -27,7 +27,8 @@ public class signupEndpoint{
    public Response signup(Credentials credentials){
        String username = credentials.getUsername();
        String password = credentials.getPassword();
-       LOGGER.log(Level.INFO, "username = " + username + ", password = " + password);
+       String name = credentials.getName();
+       LOGGER.log(Level.INFO, "username = " + username + ", password = " + password + ", name = " + name);
       
        try {
            //save the user information in the database
@@ -44,8 +45,6 @@ public class signupEndpoint{
     
    private void saveInDatabase(Credentials credentials){
        try {
-           String hashedPassword = HASH.hashPassword(credentials.getPassword());
-           credentials.setPassword(hashedPassword);
            CRUD userCRUD = new userCRUD();
            userCRUD.create(credentials);
        } catch(Exception e){
