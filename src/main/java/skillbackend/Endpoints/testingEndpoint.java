@@ -15,6 +15,6 @@ public class testingEndpoint {
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
     public Response signup(){
-        return Response.ok("This one is working").build();
+        return Response.ok("Test Data, Test Data, Test Data, Test Data, Test Data, Test Data, Test Data, Test Data, Test Data, Test Data").build();
     }
 }
