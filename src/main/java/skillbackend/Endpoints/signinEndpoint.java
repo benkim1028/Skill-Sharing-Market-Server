@@ -1,8 +1,7 @@
 package skillbackend.Endpoints;
 
 import javassist.bytecode.stackmap.TypeData;
-import skillbackend.Database.CRUD;
-import skillbackend.Database.tokenCRUD;
+import org.json.JSONObject;
 import skillbackend.Database.userCRUD;
 import skillbackend.Model.Credentials;
 import skillbackend.Model.Identifier;
@@ -12,12 +11,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,7 +23,7 @@ public class signinEndpoint {
     //private static Connection con = jdbcConnection.getConnection();
     private static final Logger LOGGER = Logger.getLogger( TypeData.ClassName.class.getName() );
     private static final JWT jwt = new JWT();
-    private static final int time = 999999999;
+    private static final int time = 800000;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -37,7 +32,7 @@ public class signinEndpoint {
 
         String username = credentials.getUsername();
         String password = credentials.getPassword();
-        LOGGER.log(Level.INFO, "username = " + username + ", password = " + password);
+        LOGGER.log(Level.INFO, "Authentication started - username = " + username + ", password = " + password);
 
         try {
 
@@ -48,7 +43,9 @@ public class signinEndpoint {
             String token = issueToken(username);
 
             // Return the token on the response and set cookie
-            return Response.ok(token).build();
+            JSONObject jsonToken = new JSONObject();
+            jsonToken.put("token", token);
+            return Response.status(200).entity(jsonToken.toString()).build();
 
         } catch (Exception e) {
             return Response.status(Response.Status.FORBIDDEN).build();
@@ -58,7 +55,7 @@ public class signinEndpoint {
     private void authenticate(Credentials credentials) throws Exception {
         //TODO: check if the user exist in the database and provided password is valid
         LOGGER.log(Level.INFO, "Authenticating the user - username: " + credentials.getUsername() + " password: " + credentials.getPassword());
-        CRUD userCRUD = new userCRUD();
+        userCRUD userCRUD = new userCRUD();
         try {
             userCRUD.read(credentials);
         } catch(Exception e){

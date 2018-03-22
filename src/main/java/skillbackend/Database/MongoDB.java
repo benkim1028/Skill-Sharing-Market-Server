@@ -12,7 +12,7 @@ public class MongoDB {
     private MongoClient mongoClient;
     private MongoDatabase db;
     private String username = "skill";
-    private String password = "x4R2cHYkhLp16n8U";
+    private String password = "Tkflzls1!";
 
     private MongoDB(){
         uri = new MongoClientURI("mongodb+srv://" + username + ":" + password + "@cluster0-0dasm.mongodb.net/");

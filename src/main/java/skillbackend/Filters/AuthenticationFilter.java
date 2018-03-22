@@ -2,8 +2,6 @@ package skillbackend.Filters;
 
 import javassist.bytecode.stackmap.TypeData;
 import skillbackend.Annotations.Secured;
-import skillbackend.Database.CRUD;
-import skillbackend.Database.tokenCRUD;
 import skillbackend.Model.JWT;
 
 import javax.annotation.Priority;
@@ -15,11 +13,6 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,6 +45,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             validateToken(token);
 
         } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, e.toString(), e);
             requestContext.abortWith(
                     Response.status(Response.Status.UNAUTHORIZED).build());
         }
@@ -62,6 +56,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         // Todo: need to check if this token is valid JWT Token
         LOGGER.log(Level.INFO, "Token Validation started, token: " +token);
         if (jwt.parseJWT(token)){
+            LOGGER.log(Level.INFO, "Token Validation passed");
             return;
         } else {
             LOGGER.log(Level.SEVERE, "Token Validation is failed");

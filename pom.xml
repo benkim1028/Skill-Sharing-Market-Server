@@ -65,6 +65,12 @@
             <artifactId>mongodb-driver</artifactId>
             <version>3.6.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20160810</version>
+        </dependency>
+
     </dependencies>
     <properties>
         <jersey.version>2.16</jersey.version>

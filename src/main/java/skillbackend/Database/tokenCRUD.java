@@ -1,12 +1,15 @@
 package skillbackend.Database;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import skillbackend.Model.Credentials;
 import skillbackend.Model.Hash;
 import skillbackend.Model.JWT;
 
-public class tokenCRUD implements CRUD{
+public class tokenCRUD{
+    MongoDB mongoDB = MongoDB.getInstance();
+    MongoDatabase db = mongoDB.getDB();
     private Hash HASH = new Hash();
     private MongoCollection<Document> collection = db.getCollection("user");
 

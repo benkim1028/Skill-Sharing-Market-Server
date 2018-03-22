@@ -1,10 +1,9 @@
 package skillbackend.Endpoints;
 
 import javassist.bytecode.stackmap.TypeData;
-import skillbackend.Database.CRUD;
 import skillbackend.Database.userCRUD;
-import skillbackend.Model.Credentials;
 import skillbackend.Model.Hash;
+import skillbackend.Model.User;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -24,36 +23,31 @@ public class signupEndpoint{
    @POST
    @Produces(MediaType.APPLICATION_JSON)
    @Consumes(MediaType.APPLICATION_JSON)
-   public Response signup(Credentials credentials){
-       String username = credentials.getUsername();
-       String password = credentials.getPassword();
-       String name = credentials.getName();
-       LOGGER.log(Level.INFO, "username = " + username + ", password = " + password + ", name = " + name);
-      
+   public Response signup(User aUser){
+       LOGGER.log(Level.INFO, "SignUp endpoint is called");
        try {
            //save the user information in the database
-           saveInDatabase(credentials);
+           saveInDatabase(aUser);
            //if successfully saved in the database, give the user a token (same as signin process)
            return Response.ok().build();
        } catch (Exception e) {
            LOGGER.log(Level.SEVERE, e.toString(), e);
-           throw e;
+           return Response.status(Response.Status.NOT_ACCEPTABLE).entity(e.toString()).build();
        }
-       //return Response.status(Response.Status.FORBIDDEN).build();
 
    }
-    
-   private void saveInDatabase(Credentials credentials){
+
+   private void saveInDatabase(User aUser) throws Exception {
        try {
-           CRUD userCRUD = new userCRUD();
-           userCRUD.create(credentials);
+           userCRUD userCRUD = new userCRUD();
+           userCRUD.create(aUser);
        } catch(Exception e){
            LOGGER.log(Level.SEVERE, e.toString(), e);
            throw e;
        }
       //TODO: create user table in a database
       //TODO: get hash of password and then save userid and hash of password into the database
-         
+
    }
 
 

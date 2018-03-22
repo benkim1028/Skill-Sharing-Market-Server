@@ -55,4 +55,10 @@ public class JWT {
         else
             return false;
     }
+    public String getUsername(String jwt){
+        Claims claims = Jwts.parser()
+                .setSigningKey(DatatypeConverter.parseBase64Binary(ApiSecret))
+                .parseClaimsJws(jwt).getBody();
+        return claims.getId();
+    }
 }
