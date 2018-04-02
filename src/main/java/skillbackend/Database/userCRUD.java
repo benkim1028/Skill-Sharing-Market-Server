@@ -54,7 +54,7 @@ public class userCRUD{
         return query.toJson();
     }
     public static void main(String[] args){
-        userCRUD userCRUD =  new skillbackend.Database.userCRUD();
+        userCRUD userCRUD =  new userCRUD();
         System.out.println(userCRUD.getUserInfo("benkim1028@gmail.com"));
     }
 

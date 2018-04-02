@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="webapp-runner">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/dependency/webapp-runner.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
