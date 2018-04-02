@@ -25,15 +25,9 @@ public class MongoDB {
         options_builder.maxWaitTime(100000);
         options_builder.maxConnectionIdleTime(100000);
         MongoClientURI uri = new MongoClientURI(
-                "mongodb+srv://"+ username +":"+ password +"@cluster0-0dasm.mongodb.net/", options_builder);
-
+                "mongodb://"+username+":"+password+"@ds231739.mlab.com:31739/heroku_6l526rzg", options_builder);
         MongoClient mongoClient = new MongoClient(uri);
-
-
-        //uri = new MongoClientURI("mongodb+srv://" + username + ":" + password + "@cluster0-0dasm.mongodb.net/");
-        //uri = new MongoClientURI("mongodb://benkim1028:Tkflzls1!@ds121999.mlab.com:21999/skilldb?authMode=scram-sha1");
-        //mongoClient = new MongoClient(uri);
-        db = mongoClient.getDatabase(database);
+        db = mongoClient.getDatabase(uri.getDatabase());
 
     }
 
