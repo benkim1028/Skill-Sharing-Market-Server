@@ -47,7 +47,7 @@ public class postCRUD {
         while (iterator.hasNext()) {
             Document doc = iterator.next();
             System.out.println(doc);
-            list.put(doc.getString("uid"), doc.toJson());
+            list.put(doc.getString("uid"), new JSONObject(doc));
         }
         return list.toString();
     }
