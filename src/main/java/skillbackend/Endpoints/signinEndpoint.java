@@ -23,7 +23,7 @@ public class signinEndpoint {
     //private static Connection con = jdbcConnection.getConnection();
     private static final Logger LOGGER = Logger.getLogger( TypeData.ClassName.class.getName() );
     private static final JWT jwt = new JWT();
-    private static final int time = 800000;
+    private static final int time = 3600;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)

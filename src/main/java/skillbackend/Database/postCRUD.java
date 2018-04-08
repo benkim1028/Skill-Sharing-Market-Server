@@ -1,32 +1,26 @@
 package skillbackend.Database;
 
-import com.mongodb.BasicDBList;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.util.JSON;
 import org.bson.Document;
 import org.json.JSONObject;
 import skillbackend.Exceptions.InvalidUserException;
-import skillbackend.Exceptions.UsernameExistException;
-import skillbackend.Exceptions.WrongPasswordException;
-import skillbackend.Model.Credentials;
-import skillbackend.Model.Post;
-
-import java.util.ArrayList;
-import java.util.List;
+import skillbackend.Model.Posts.PostBase;
 
 import static com.mongodb.client.model.Filters.eq;
 
 public class postCRUD {
-    MongoDB mongoDB = MongoDB.getInstance();
-    MongoDatabase db = mongoDB.getDB();
-    private MongoCollection<Document> collection = db.getCollection("post");
+    private MongoDB mongoDB = MongoDB.getInstance();
+    private MongoDatabase db = mongoDB.getDB();
+    private MongoCollection<Document> collection;
 
-    public void create(Object obj){
-        Post post = (Post) obj;
-        Document doc = Post.createDBObject(post);
+    public postCRUD(String category){
+        collection = db.getCollection(category);
+    }
+
+    public void create(PostBase post){
+        Document doc = post.createDBObject();
         collection.insertOne(doc);
     }
 
