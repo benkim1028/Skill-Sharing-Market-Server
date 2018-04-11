@@ -41,7 +41,10 @@ public class userCRUD{
         return query;
     }
 
-    public void update(String collectionName) {
+    public void updateGoogleUser() {
+    //    collection.updateOne(
+    //            eq("username", new ObjectId("57506d62f57802807471dd41")),
+    //            combine(set("stars", 1), set("contact.phone", "228-555-9999"), currentDate("lastModified")));
     }
 
     public void delete() {
@@ -55,6 +58,7 @@ public class userCRUD{
         System.out.println("getUserINfo" + query);
         return query.toJson();
     }
+    
     public static void main(String[] args){
         userCRUD userCRUD =  new userCRUD();
         System.out.println(userCRUD.getUserInfo("benkim1028@gmail.co"));
