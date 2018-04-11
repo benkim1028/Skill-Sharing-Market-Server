@@ -70,7 +70,7 @@ public class signinEndpoint {
         return Response.status(200).entity(jsonToken.toString()).build();
     }
 
-    private Response authenticateGoogleUser(String idTokenString) throws GeneralSecurityException, IOException {
+    private Response authenticateGoogleUser(String idTokenString) throws GeneralSecurityException, IOException, Exception {
         LOGGER.log(Level.INFO, "Google Authentication started");
         final HttpTransport transport = new NetHttpTransport();
         final JsonFactory jsonFactory = new JacksonFactory();
