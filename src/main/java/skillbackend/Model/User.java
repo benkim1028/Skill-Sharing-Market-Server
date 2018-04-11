@@ -28,37 +28,21 @@ public class User implements Serializable{
 
     public void setGender(String gender) { this.gender = gender; }
 
-    public String getFirstname() {
-        return firstname;
-    }
+    public String getFirstname() { return firstname;}
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
+    public void setFirstname(String firstname) {this.firstname = firstname;}
 
-    public String getLastname() {
-        return lastname;
-    }
+    public String getLastname() {return lastname;}
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+    public void setLastname(String lastname) {this.lastname = lastname;}
 
-    public String getUsername() {
-        return username;
-    }
+    public String getUsername() {return username;}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    public void setUsername(String username) {this.username = username;}
 
-    public String getPassword() {
-        return password;
-    }
+    public String getPassword() {return password;}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public void setPassword(String password) {this.password = password;}
 
     public static User createUser(String firstname, String lastname, String username, String password, String gender, String phonenumber){
         User u = new User();
@@ -68,6 +52,16 @@ public class User implements Serializable{
         u.setPassword(password);
         u.setGender(gender);
         u.setPhonenumber(phonenumber);
+        return u;
+    }
+    public static User createUser(String firstname, String lastname, String username){
+        User u = new User();
+        u.setFirstname(firstname);
+        u.setLastname(lastname);
+        u.setUsername(username);
+        u.setPassword(null);
+        u.setGender(null);
+        u.setPhonenumber(null);
         return u;
     }
     public static Document createDBObject(User user) {
