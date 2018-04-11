@@ -13,6 +13,7 @@ import skillbackend.Database.userCRUD;
 import skillbackend.Model.Credentials;
 import skillbackend.Model.Identifier;
 import skillbackend.Model.JWT;
+import skillbackend.Model.User;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -99,10 +100,17 @@ public class signinEndpoint {
             JSONObject jsonToken = new JSONObject();
             if(emailVerified) {
                 if(userExists(email)) {
+                    //if the user exists, process is same as default login
                     jsonToken.put("token", issueToken(email));
                     jsonToken.put("message", "Login Successful");
                     return Response.status(200).entity(jsonToken.toString()).build();
                 } else {
+                    // create an incomplete user and save into the database
+                    User aUser = User.createUser(givenName, familyName, email);
+                    userCRUD userCRUD = new userCRUD();
+                    userCRUD.create(aUser);
+                    
+                    // send response and request more information
                     jsonToken.put("token", "");
                     jsonToken.put("message", "Need More Information");
                     return Response.status(200).entity(jsonToken.toString()).build();
