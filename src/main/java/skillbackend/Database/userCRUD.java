@@ -10,6 +10,8 @@ import skillbackend.Model.Credentials;
 import skillbackend.Model.Hash;
 import skillbackend.Model.User;
 
+import javax.validation.constraints.Null;
+
 import static com.mongodb.client.model.Filters.*;
 
 public class userCRUD{
@@ -45,7 +47,7 @@ public class userCRUD{
     public void delete() {
     }
 
-    public String getUserInfo(String username){
+    public String getUserInfo(String username) throws NullPointerException {
         System.out.println("getUserINfo");
         Document query = collection.find(eq("username", username)).first();
         System.out.println("getUserINfo" + query);
@@ -55,7 +57,7 @@ public class userCRUD{
     }
     public static void main(String[] args){
         userCRUD userCRUD =  new userCRUD();
-        System.out.println(userCRUD.getUserInfo("benkim1028@gmail.com"));
+        System.out.println(userCRUD.getUserInfo("benkim1028@gmail.co"));
     }
 
 

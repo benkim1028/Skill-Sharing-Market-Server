@@ -24,5 +24,18 @@ public class Credentials implements Serializable {
         this.username = username;
     }
 
+    private String idp;
+
+    public String getIdp() { return idp; }
+
+    public void setIdp(String idp) { this.idp = idp; }
+
+    private String idToken;
+
+    public String getIdToken() { return idToken; }
+
+    public void setIdToken(String idToken) { this.idToken = idToken; }
+
+
     // Getters and setters omitted
 }

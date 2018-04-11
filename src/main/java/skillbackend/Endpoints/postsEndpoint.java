@@ -1,6 +1,7 @@
 package skillbackend.Endpoints;
 
 import javassist.bytecode.stackmap.TypeData;
+import skillbackend.Annotations.Secured;
 import skillbackend.Database.postCRUD;
 import skillbackend.Model.Hash;
 import skillbackend.Model.Posts.BuyPost;
@@ -22,6 +23,7 @@ public class postsEndpoint {
 
     @POST
     @Path("/{category}/newbuypost")
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createBuyPost(@PathParam("category") String category, BuyPost buyPost) {
@@ -32,6 +34,7 @@ public class postsEndpoint {
 
     @POST
     @Path("/{category}/newsellpost")
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSellPost(@PathParam("category") String category, SellPost sellPost) {
