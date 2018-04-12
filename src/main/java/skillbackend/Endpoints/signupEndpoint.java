@@ -4,6 +4,8 @@ import javassist.bytecode.stackmap.TypeData;
 import skillbackend.Database.userCRUD;
 import skillbackend.Model.Hash;
 import skillbackend.Model.User;
+import skillbackend.Model.Identifier;
+import skillbackend.Model.JWT;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -34,7 +36,21 @@ public class signupEndpoint{
            LOGGER.log(Level.SEVERE, e.toString(), e);
            return Response.status(Response.Status.NOT_ACCEPTABLE).entity(e.toString()).build();
        }
-
+   }
+   
+   @POST
+   @Path("/{idp}")
+   @Produces(MediaType.APPLICATION_JSON)
+   @Consumes(MediaType.APPLICATION_JSON)\
+   public Response signup(@PathParam("idp") String idp, User aUser){
+      LOGGER.log(Level.INFO, "SignUp endpoint is called : " + idp );
+      userCRUD userCRUD = new userCRUD();
+      userCRUD.update(aUser)
+      String token = issueToken(aUser.getUsername());
+      JSONObject jsonToken = new JSONObject();
+      jsonToken.put("token", token);
+      jsonToken.put("message", "Login Successful");
+      return Response.status(200).entity(jsonToken.toString()).build();
    }
 
    private void saveInDatabase(User aUser) throws Exception {
@@ -49,6 +65,13 @@ public class signupEndpoint{
       //TODO: get hash of password and then save userid and hash of password into the database
 
    }
+   
+   private String issueToken(String username) {
+        LOGGER.log(Level.INFO, "Issuing a token for a user: " + username);
+        String token = jwt.createJWT(username, Identifier.issuer, Identifier.subject, time);
+        return token;
+   }
+
 
 
 
