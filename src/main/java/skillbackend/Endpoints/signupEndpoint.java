@@ -41,11 +41,11 @@ public class signupEndpoint{
    @POST
    @Path("/{idp}")
    @Produces(MediaType.APPLICATION_JSON)
-   @Consumes(MediaType.APPLICATION_JSON)\
+   @Consumes(MediaType.APPLICATION_JSON)
    public Response signup(@PathParam("idp") String idp, User aUser){
       LOGGER.log(Level.INFO, "SignUp endpoint is called : " + idp );
       userCRUD userCRUD = new userCRUD();
-      userCRUD.update(aUser)
+      userCRUD.update(aUser);
       String token = issueToken(aUser.getUsername());
       JSONObject jsonToken = new JSONObject();
       jsonToken.put("token", token);
