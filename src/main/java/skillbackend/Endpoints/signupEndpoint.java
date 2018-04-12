@@ -1,5 +1,7 @@
 package skillbackend.Endpoints;
 
+import org.json.JSONObject;
+
 import javassist.bytecode.stackmap.TypeData;
 import skillbackend.Database.userCRUD;
 import skillbackend.Model.Hash;
@@ -7,10 +9,7 @@ import skillbackend.Model.User;
 import skillbackend.Model.Identifier;
 import skillbackend.Model.JWT;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.logging.Level;
@@ -22,6 +21,9 @@ import java.util.logging.Logger;
 public class signupEndpoint{
    private static final Logger LOGGER = Logger.getLogger( TypeData.ClassName.class.getName() );
    private Hash HASH = new Hash();
+   private static final int time = 800000;
+   
+   
    @POST
    @Produces(MediaType.APPLICATION_JSON)
    @Consumes(MediaType.APPLICATION_JSON)
