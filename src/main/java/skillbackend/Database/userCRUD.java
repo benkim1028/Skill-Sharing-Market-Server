@@ -13,6 +13,9 @@ import skillbackend.Model.User;
 import javax.validation.constraints.Null;
 
 import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Updates.combine;
+import static com.mongodb.client.model.Updates.currentDate;
+import static com.mongodb.client.model.Updates.set;
 
 public class userCRUD{
     MongoDB mongoDB = MongoDB.getInstance();
@@ -41,10 +44,15 @@ public class userCRUD{
         return query;
     }
 
-    public void updateGoogleUser() {
-    //    collection.updateOne(
-    //            eq("username", new ObjectId("57506d62f57802807471dd41")),
-    //            combine(set("stars", 1), set("contact.phone", "228-555-9999"), currentDate("lastModified")));
+    public void update(User aUser) {
+        collection.updateOne(
+                eq("username", aUser.getUsername()),
+                combine(set("firstname", aUser.getFirstname()),
+                        set("lastname", aUser.getLastname()),
+                        set("phonenumber", aUser.getPhonenumber()),
+                        set("gender", aUser.getGender()),
+                        set("birthdate", aUser.getBirthdate()),
+                        currentDate("lastModified")));
     }
 
     public void delete() {

@@ -10,19 +10,17 @@ public class User implements Serializable{
     private String lastname;
     private String username;
     private String password;
+    private String phonenumber;
+    private Date birthdate;
     private String gender;
 
     public Date getBirthdate() { return birthdate; }
 
     public void setBirthdate(Date birthdate) { this.birthdate = birthdate;}
 
-    private Date birthdate;
-
     public String getPhonenumber() { return phonenumber; }
 
     public void setPhonenumber(String phonenumber) { this.phonenumber = phonenumber; }
-
-    private String phonenumber;
 
     public String getGender() {return gender; }
 

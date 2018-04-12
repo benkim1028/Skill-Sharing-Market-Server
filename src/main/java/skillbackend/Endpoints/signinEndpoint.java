@@ -113,6 +113,9 @@ public class signinEndpoint {
                     // send response and request more information
                     jsonToken.put("token", "");
                     jsonToken.put("message", "Need More Information");
+                    jsonToken.put("username", email);
+                    jsonToken.put("firstname", givenName);
+                    jsonToken.put("lastname", familyName);
                     return Response.status(200).entity(jsonToken.toString()).build();
                 }
             } else {
