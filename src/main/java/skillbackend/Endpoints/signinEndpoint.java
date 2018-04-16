@@ -14,8 +14,10 @@ import skillbackend.Model.Credentials;
 import skillbackend.Model.Identifier;
 import skillbackend.Model.JWT;
 import skillbackend.Model.User;
+import skillbackend.Model.FacebookResponse;
 
 import javax.ws.rs.*;
+import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
@@ -46,8 +48,10 @@ public class signinEndpoint {
             if(credentials.getIdp().equals("default")) {
                 return authenticateDefault(credentials);
 
-            } else {
+            } else if (credentials.getIdp().equals("google")){
                 return authenticateGoogleUser(credentials.getIdToken());
+            } else if (credentials.getIdp().equals("facebook")){
+                return authenticateFacebookUser(credentials.getIdToken());
             }
 
         } catch (Exception e) {
@@ -127,6 +131,26 @@ public class signinEndpoint {
             System.out.println("Invalid ID token.");
             return Response.status(Response.Status.FORBIDDEN).build();
         }
+    }
+    
+    private Response authenticateFacebookUser(String idTokenString){
+        LOGGER.log(Level.INFO, "Facebook Authentication started");
+        
+        String clientID = "479228355825921";
+        String clientSecret = "4c1aa3b0e2c2777d04ca7d2511337c90";
+        String appLink = "https://graph.facebook.com/oauth/access_token?client_id=" + clientId + "&client_secret=" + clientSecret + "&grant_type=client_credentials"
+        
+        Client client = ClientBuilder.newClient();
+        WebTarget webTarget = client.target(appLink);
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION.JSON);
+        FacebookResponse response = invocationBuilder.get(FacebookResponse.class);
+        String appToken = response.getAccessToken();
+        
+        String link = "https://graph.facebook.com/debug_token?input_token=" + userToken + "&access_token=" + appToken;
+        webTarget = client.target(link);
+        invocationBuilder = webTarget.request(MediaType.APPLICATION.JSON);
+        Response response2 = invocationBuilder.get();
+        return response2;
     }
 
     private void authenticate(Credentials credentials) throws Exception {
