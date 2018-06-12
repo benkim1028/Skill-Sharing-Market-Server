@@ -9,8 +9,5 @@
         <module name="skillbackend" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="skillbackend" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

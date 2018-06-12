@@ -47,7 +47,6 @@ public class signinEndpoint {
         try {
             if(credentials.getIdp().equals("default")) {
                 return authenticateDefault(credentials);
-
             } else if (credentials.getIdp().equals("google")){
                 return authenticateGoogleUser(credentials.getIdToken());
             } else if (credentials.getIdp().equals("facebook")){
@@ -58,6 +57,7 @@ public class signinEndpoint {
             LOGGER.log(Level.SEVERE, e.toString(), e);
             return Response.status(Response.Status.FORBIDDEN).build();
         }
+        return Response.status(Response.Status.FORBIDDEN).build();
     }
 
     private Response authenticateDefault(Credentials credentials) throws Exception {
@@ -138,17 +138,17 @@ public class signinEndpoint {
         
         String clientID = "479228355825921";
         String clientSecret = "4c1aa3b0e2c2777d04ca7d2511337c90";
-        String appLink = "https://graph.facebook.com/oauth/access_token?client_id=" + clientId + "&client_secret=" + clientSecret + "&grant_type=client_credentials"
+        String appLink = "https://graph.facebook.com/oauth/access_token?client_id=" + clientID + "&client_secret=" + clientSecret + "&grant_type=client_credentials";
         
         Client client = ClientBuilder.newClient();
         WebTarget webTarget = client.target(appLink);
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION.JSON);
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
         FacebookResponse response = invocationBuilder.get(FacebookResponse.class);
         String appToken = response.getAccessToken();
         
-        String link = "https://graph.facebook.com/debug_token?input_token=" + userToken + "&access_token=" + appToken;
+        String link = "https://graph.facebook.com/debug_token?input_token=" + idTokenString + "&access_token=" + appToken;
         webTarget = client.target(link);
-        invocationBuilder = webTarget.request(MediaType.APPLICATION.JSON);
+        invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
         Response response2 = invocationBuilder.get();
         return response2;
     }
