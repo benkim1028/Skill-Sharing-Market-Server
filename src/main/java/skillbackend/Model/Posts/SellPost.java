@@ -14,6 +14,16 @@ public class SellPost implements PostBase {
     private String retired;
     private Date createdAt;
     private String price;
+    private String images;
+    private String url;
+
+    public String getUrl() { return url; }
+
+    public void setUrl(String url) { this.url = url; }
+
+    public String getImages() { return images; }
+
+    public void setImages(String images) {this.images = images;}
 
     public String getPrice() { return price; }
 
@@ -65,6 +75,7 @@ public class SellPost implements PostBase {
         doc.append("retired", getRetired());
         doc.append("createdAt", getCreatedAt());
         doc.append("price", getPrice());
+        doc.append("url", getUrl());
         return doc;
     }
 }

@@ -17,8 +17,7 @@ public class MongoDB {
     private String database = "skillDB";
 
     private MongoDB() {
-        MongoClientOptions.Builder options_builder = new MongoClientOptions.Builder(
-        );
+        MongoClientOptions.Builder options_builder = new MongoClientOptions.Builder();
         // for production options_builder.sslEnabled(true);
         options_builder.socketTimeout(500);
         options_builder.serverSelectionTimeout(100000);
@@ -26,7 +25,8 @@ public class MongoDB {
         options_builder.maxConnectionIdleTime(100000);
         MongoClientURI uri = new MongoClientURI(
                 "mongodb://"+username+":"+password+"@ds231739.mlab.com:31739/heroku_6l526rzg", options_builder);
-        MongoClient mongoClient = new MongoClient(uri);
+        //MongoClient mongoClient = new MongoClient(uri);
+        MongoClient mongoClient = new MongoClient("localhost", 27017);
         db = mongoClient.getDatabase(uri.getDatabase());
 
     }

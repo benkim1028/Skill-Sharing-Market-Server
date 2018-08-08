@@ -35,8 +35,6 @@ public class postCRUD {
 
     public String readAll() {
         MongoCursor<Document> iterator = collection.find(eq("retired", "false")).iterator();
-        System.out.println(iterator);
-
         JSONObject list = new JSONObject();
         while (iterator.hasNext()) {
             Document doc = iterator.next();

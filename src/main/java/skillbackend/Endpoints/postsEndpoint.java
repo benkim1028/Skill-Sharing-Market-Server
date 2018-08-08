@@ -1,7 +1,9 @@
 package skillbackend.Endpoints;
 
+import com.cloudinary.utils.ObjectUtils;
 import javassist.bytecode.stackmap.TypeData;
 import skillbackend.Annotations.Secured;
+import skillbackend.Database.CloudinaryStorage;
 import skillbackend.Database.postCRUD;
 import skillbackend.Model.Hash;
 import skillbackend.Model.Posts.BuyPost;
@@ -11,6 +13,8 @@ import skillbackend.Model.Posts.SellPost;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,7 +44,18 @@ public class postsEndpoint {
     public Response createSellPost(@PathParam("category") String category, SellPost sellPost) {
         LOGGER.log(Level.INFO, "createSellPost endpoint is called");
         String nameInDatabase = category + "_sell";
+        try {
+            String url = savePhotoInCloudinary(sellPost.getImages());
+            sellPost.setUrl(url);
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, e.toString(), e);
+        }
         return save(nameInDatabase, sellPost);
+    }
+
+    public String savePhotoInCloudinary(String base64) throws IOException {
+        String url = (String) CloudinaryStorage.getCloudinaryInstance().uploader().upload(base64, ObjectUtils.emptyMap()).get("url");
+        return url;
     }
 
     @GET

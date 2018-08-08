@@ -101,6 +101,11 @@
             <artifactId>google-api-client-java6</artifactId>
             <version>1.23.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+            <version>1.18.0</version>
+        </dependency>
     </dependencies>
     <properties>
         <jersey.version>2.16</jersey.version>
